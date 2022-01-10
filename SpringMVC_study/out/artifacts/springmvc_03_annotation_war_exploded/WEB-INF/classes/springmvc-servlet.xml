@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!--自动扫描包，让指定的包下注解生效，对象由容器统一管理-->
+    <context:component-scan base-package="com.tao.controller"/>
+    <!--让SpringMVC不处理静态资源  .css  .js  .html  .mp3  .mp4-->
+    <mvc:default-servlet-handler/>
+    <!--以前要配置处理器映射器和处理器适配器
+    这里配置支持注解完成映射关系和适配
+        要想使@RequestMapping注解生效：
+        必须注册DefaultAnnotationHandlerMapping和一个AnnotationMethodHandlerAdapter实例
+        annotation-driven配置自动完成上述两个实例的配置
+    -->
+    <mvc:annotation-driven/>
+
+    <!--视图解析器：DispatcherServlet传递过来的ModelAndView-->
+    <!--在视图解析器中我们把所有的视图都存放在/WEB-INF/目录下，这样
+    可以保证视图安全，因为这个目录下的文件，客户端不能直接访问-->
+
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" id="InternalResourceViewResolver">
+        <!--前缀-->
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <!--后缀-->
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+</beans>
